@@ -1,8 +1,9 @@
 name: 'Set up Nullstone'
 description: 'Set up Nullstone and add it to the PATH'
 author: 'Nullstone'
-icon: arrow-down-circle
-color: blue
+branding:
+  icon: arrow-down-circle
+  color: blue
 inputs:
   nullstone-version:
     description: 'The Nullstone CLI version to download and use.'

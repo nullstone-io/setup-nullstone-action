@@ -5987,7 +5987,7 @@ function getDownloadUrl(version) {
         default:
             throw new Error(`Architecture not supported: ${os_1.default.arch()}`);
     }
-    return `https://github.com/${repo}/releases/download/${version}/nullstone_${version}_${platform}_${arch}.tar.gz`;
+    return `https://github.com/${repo}/releases/download/v${version}/nullstone_${version}_${platform}_${arch}.tar.gz`;
 }
 
 

@@ -13,14 +13,10 @@ export async function run() {
     const downloadPath = await tc.downloadTool(downloadUrl)
 
     core.info(`Extracting nullstone`)
-    let extPath = await tc.extractTar(downloadPath)
-
-    core.info(`Adding to the cache...`)
-    const cachedDir = await tc.cacheDir(extPath, 'nullstone', version)
-    core.info(`Successfully cached nullstone to ${cachedDir}`)
+    let installPath = await tc.extractTar(downloadPath)
 
     core.info(`Adding nullstone to the path`)
-    core.addPath(cachedDir)
+    core.addPath(installPath)
 }
 
 async function getVersion(): Promise<string> {

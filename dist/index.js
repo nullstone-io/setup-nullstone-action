@@ -5924,12 +5924,9 @@ function run() {
         core.info(`Dwonloading nullstone ${version} from ${downloadUrl}`);
         const downloadPath = yield tc.downloadTool(downloadUrl);
         core.info(`Extracting nullstone`);
-        let extPath = yield tc.extractTar(downloadPath);
-        core.info(`Adding to the cache...`);
-        const cachedDir = yield tc.cacheDir(extPath, 'nullstone', version);
-        core.info(`Successfully cached nullstone to ${cachedDir}`);
+        let installPath = yield tc.extractTar(downloadPath);
         core.info(`Adding nullstone to the path`);
-        core.addPath(cachedDir);
+        core.addPath(installPath);
     });
 }
 exports.run = run;

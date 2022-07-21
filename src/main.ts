@@ -50,7 +50,10 @@ async function getLatestVersion(): Promise<string> {
         'Accept': 'application/vnd.github.v3+json'
     }
     const response = await http.getJson<GithubRelease>(requestUrl, headers)
-    return response?.result?.tag_name || ''
+    if (response && response.result) {
+        return response.result.tag_name || ''
+    }
+    return ''
 }
 
 function getDownloadUrl(version: string): string {

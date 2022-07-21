@@ -8,5 +8,5 @@ inputs:
     default: 'latest'
 runs:
   using: node16
-  main: lib/main.js
+  main: dist/index.js
   post-if: success()

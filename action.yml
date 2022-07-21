@@ -1,0 +1,12 @@
+name: 'Set up Nullstone'
+description: 'Set up Nullstone and add it to the PATH'
+author: 'Nullstone'
+inputs:
+  nullstone-version:
+    description: 'The Nullstone CLI version to download and use.'
+    required: false
+    default: 'latest'
+runs:
+  using: node16
+  main: lib/main.js
+  post-if: success()

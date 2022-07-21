@@ -1,0 +1,29 @@
+{
+  "name": "setup-nullstone-action",
+  "version": "1.0.0",
+  "description": "GitHub action to set up Nullstone CLI",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nullstone-io/setup-nullstone-action.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nullstone-io/setup-nullstone-action/issues"
+  },
+  "homepage": "https://github.com/nullstone-io/setup-nullstone-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.9.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/http-client": "^2.0.1",
+    "@actions/io": "^1.1.2",
+    "@actions/tool-cache": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.6"
+  }
+}

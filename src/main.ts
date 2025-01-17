@@ -9,7 +9,7 @@ export async function run() {
     const version = await getVersion()
     const downloadUrl = getDownloadUrl(version)
 
-    core.info(`Dwonloading nullstone ${version} from ${downloadUrl}`)
+    core.info(`Downloading nullstone ${version} from ${downloadUrl}`)
     const downloadPath = await tc.downloadTool(downloadUrl)
 
     core.info(`Extracting nullstone`)
@@ -41,9 +41,15 @@ async function getLatestVersion(): Promise<string> {
         allowRedirects: true,
         maxRedirects: 3
     })
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const requestUrl = `https://api.github.com/repos/${repo}/releases/latest`
     const headers = {
-        'Accept': 'application/vnd.github.v3+json'
+        'Accept': 'application/vnd.github.v3+json',
+        ...(
+            GITHUB_TOKEN ? {
+                Authorization: `Bearer ${GITHUB_TOKEN}`
+            } : {}
+        )
     }
     const response = await http.getJson<GithubRelease>(requestUrl, headers)
     if (response && response.result) {

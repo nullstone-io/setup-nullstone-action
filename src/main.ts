@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import * as httpm from '@actions/http-client'
 import * as tc from '@actions/tool-cache'
 import os from 'os'
 
@@ -29,10 +28,6 @@ async function getVersion(): Promise<string> {
         version = version.substring(1)
     }
     return version
-}
-
-interface GithubRelease {
-    tag_name: string;
 }
 
 async function getLatestVersion(): Promise<string> {

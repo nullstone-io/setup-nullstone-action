@@ -37,25 +37,20 @@ interface GithubRelease {
 
 async function getLatestVersion(): Promise<string> {
     core.info(`Detecting latest version from github.com/${repo} releases`)
-    let http: httpm.HttpClient = new httpm.HttpClient('setup-nullstone-action', [], {
-        allowRedirects: true,
-        maxRedirects: 3
-    })
-    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const requestUrl = `https://api.github.com/repos/${repo}/releases/latest`
-    const headers = {
-        'Accept': 'application/vnd.github.v3+json',
-        ...(
-            GITHUB_TOKEN ? {
-                Authorization: `Bearer ${GITHUB_TOKEN}`
-            } : {}
-        )
+
+    const res = await fetch(`https://github.com/${repo}/releases/latest`, { redirect: 'follow' })
+    if (!res.url) {
+        throw new Error('Could not determine final URL after redirects')
     }
-    const response = await http.getJson<GithubRelease>(requestUrl, headers)
-    if (response && response.result) {
-        return response.result.tag_name || ''
+    
+    // Extract the version tag from the final URL
+    const segments = res.url.split('/')
+    const version = segments[segments.length - 1]
+    if (!version) {
+        throw new Error(`Could not extract version from URL: ${res.url}`)
     }
-    return ''
+    
+    return version
 }
 
 function getDownloadUrl(version: string): string {

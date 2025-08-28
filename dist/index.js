@@ -28249,7 +28249,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
-const httpm = __importStar(__nccwpck_require__(6255));
 const tc = __importStar(__nccwpck_require__(7784));
 const os_1 = __importDefault(__nccwpck_require__(2037));
 const repo = 'nullstone-io/nullstone';
@@ -28281,20 +28280,17 @@ function getVersion() {
 function getLatestVersion() {
     return __awaiter(this, void 0, void 0, function* () {
         core.info(`Detecting latest version from github.com/${repo} releases`);
-        let http = new httpm.HttpClient('setup-nullstone-action', [], {
-            allowRedirects: true,
-            maxRedirects: 3
-        });
-        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const requestUrl = `https://api.github.com/repos/${repo}/releases/latest`;
-        const headers = Object.assign({ 'Accept': 'application/vnd.github.v3+json' }, (GITHUB_TOKEN ? {
-            Authorization: `Bearer ${GITHUB_TOKEN}`
-        } : {}));
-        const response = yield http.getJson(requestUrl, headers);
-        if (response && response.result) {
-            return response.result.tag_name || '';
+        const res = yield fetch(`https://github.com/${repo}/releases/latest`, { redirect: 'follow' });
+        if (!res.url) {
+            throw new Error('Could not determine final URL after redirects');
         }
-        return '';
+        // Extract the version tag from the final URL
+        const segments = res.url.split('/');
+        const version = segments[segments.length - 1];
+        if (!version) {
+            throw new Error(`Could not extract version from URL: ${res.url}`);
+        }
+        return version;
     });
 }
 function getDownloadUrl(version) {
